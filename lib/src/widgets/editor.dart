@@ -5,25 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
-import 'package:notus_format/notus_format.dart';
-import 'package:zefyrka/src/services/clipboard_controller.dart';
-import 'package:zefyrka/src/services/simple_clipboard_controller.dart';
 import 'package:zefyrka/src/widgets/baseline_proxy.dart';
 import 'package:zefyrka/zefyrka.dart';
 
-import '../rendering/editor.dart';
 import '../services/keyboard.dart' as keyboard;
-import 'controller.dart';
-import 'cursor.dart';
 import 'editable_text_block.dart';
 import 'editable_text_line.dart';
 import 'editor_input_client_mixin.dart';
 import 'editor_keyboard_mixin.dart';
 import 'editor_selection_delegate_mixin.dart';
-import 'text_line.dart';
 import 'text_selection.dart';
-import 'theme.dart';
 
 /// Builder function for embeddable objects in [ZefyrEditor].
 typedef ZefyrEmbedBuilder = Widget Function(
@@ -1064,7 +1055,7 @@ class RawEditorState extends EditorState
     SchedulerBinding.instance.addPostFrameCallback((Duration _) {
       _showCaretOnScreenScheduled = false;
 
-      final viewport = RenderAbstractViewport.of(renderEditor)!;
+      final viewport = RenderAbstractViewport.of(renderEditor);
       final editorOffset =
           renderEditor.localToGlobal(Offset(0.0, 0.0), ancestor: viewport);
       final offsetInViewport = _scrollController!.offset + editorOffset.dy;
@@ -1340,6 +1331,10 @@ class RawEditorState extends EditorState
   void insertContent(KeyboardInsertedContent content) {
     // TODO: implement insertContent
   }
+  
+  @override
+  // TODO: implement liveTextInputEnabled
+  bool get liveTextInputEnabled => false;
 }
 
 class _Editor extends MultiChildRenderObjectWidget {
