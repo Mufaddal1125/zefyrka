@@ -192,8 +192,7 @@ class EditorTextSelectionOverlay {
               _buildHandle(context, _TextSelectionHandlePosition.end)),
     ];
 
-    Overlay.of(context, rootOverlay: true, debugRequiredFor: debugRequiredFor)!
-        .insertAll(_handles!);
+    Overlay.of(context, rootOverlay: true, debugRequiredFor: debugRequiredFor).insertAll(_handles!);
   }
 
   /// Destroys the handles by removing them from overlay.
@@ -209,8 +208,7 @@ class EditorTextSelectionOverlay {
   void showToolbar() {
     assert(_toolbar == null);
     _toolbar = OverlayEntry(builder: _buildToolbar);
-    Overlay.of(context, rootOverlay: true, debugRequiredFor: debugRequiredFor)!
-        .insert(_toolbar!);
+    Overlay.of(context, rootOverlay: true, debugRequiredFor: debugRequiredFor).insert(_toolbar!);
     _toolbarController.forward(from: 0.0);
   }
 
@@ -1069,7 +1067,7 @@ class EditorTextSelectionGestureDetector extends StatefulWidget {
   /// The frequency of calls is throttled to avoid excessive text layout
   /// operations in text fields. The throttling is controlled by the constant
   /// [_kDragSelectionUpdateThrottle].
-  final DragSelectionUpdateCallback? onDragSelectionUpdate;
+  final void Function(DragStartDetails startDetails, DragUpdateDetails updateDetails)? onDragSelectionUpdate;
 
   /// Called when a mouse that was previously dragging is released.
   final GestureDragEndCallback? onDragSelectionEnd;
@@ -1250,8 +1248,7 @@ class _EditorTextSelectionGestureDetectorState
       gestures[LongPressGestureRecognizer] =
           GestureRecognizerFactoryWithHandlers<LongPressGestureRecognizer>(
         () => LongPressGestureRecognizer(
-            debugOwner: this,
-            supportedDevices: Set.of({PointerDeviceKind.touch})),
+            debugOwner: this, supportedDevices: {PointerDeviceKind.touch}),
         (LongPressGestureRecognizer instance) {
           instance
             ..onLongPressStart = _handleLongPressStart
@@ -1269,8 +1266,7 @@ class _EditorTextSelectionGestureDetectorState
       gestures[HorizontalDragGestureRecognizer] =
           GestureRecognizerFactoryWithHandlers<HorizontalDragGestureRecognizer>(
         () => HorizontalDragGestureRecognizer(
-            debugOwner: this,
-            supportedDevices: Set.of({PointerDeviceKind.mouse})),
+            debugOwner: this, supportedDevices: {PointerDeviceKind.mouse}),
         (HorizontalDragGestureRecognizer instance) {
           instance
             // Text selection should start from the position of the first pointer

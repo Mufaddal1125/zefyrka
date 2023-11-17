@@ -32,6 +32,7 @@ class SimpleClipboardController implements ClipboardController {
         selection: TextSelection.collapsed(offset: controller.selection.start),
       );
     }
+    return null;
   }
 
   @override
